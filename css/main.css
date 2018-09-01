@@ -1,0 +1,18 @@
+.overlay {
+    position: fixed;
+    background-color: white;
+    border: 2px black dashed;
+    top: 0;
+    left: 0;
+}
+
+.control-bar {
+    top: initial;
+    bottom: 0;
+}
+
+.tool-bar {
+    top: 200px;
+    left: initial;
+    right: 0;
+}

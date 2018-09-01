@@ -2,12 +2,15 @@
 <html>
     <head>
         <title>Conway's Game of Life</title>
+        <!-- Normalize.css to reset styles -->
+        <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <h1>For someone with zero web dev experience...</h1>
-        <p>This is a start.</p>
-        <p>Adding this line just to toy around with pull requests.</p>
-        <canvas id="canvas">If you can read this, your browser is too old!</canvas>
+        <canvas class="canvas">If you can read this, your browser is too old!</canvas>
+        <div class="overlay title-bar">This would be the header</div>
+        <div class="overlay control-bar">This would be the controls</div>
+        <div class="overlay tool-bar">Toolbar goes here</div>
         <script src="js/main.js"></script>
     </body>
 </html>
