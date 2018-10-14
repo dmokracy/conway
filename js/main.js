@@ -24,7 +24,25 @@ hideBtn.addEventListener("click", function() {
     var hideBtnIconClassList = hideBtn.querySelector("i").classList;
     hideBtnIconClassList.toggle("fa-angle-double-up");
     hideBtnIconClassList.toggle("fa-angle-double-down");
-    document.querySelectorAll(".bar").forEach(function(e) {
-        e.classList.toggle("hidden-bar");
+    document.querySelectorAll(".hide-up").forEach(function(e) {
+        if (hideBtnIconClassList.contains("fa-angle-double-down")) {
+            e.style.bottom = e.offsetHeight + "px";
+        } else {
+            e.style.bottom = 0 + "px";
+        }
+    });
+    document.querySelectorAll(".hide-down").forEach(function(e) {
+        if (hideBtnIconClassList.contains("fa-angle-double-down")) {
+            e.style.top = e.offsetHeight + "px";
+        } else {
+            e.style.top = 0 + "px";
+        }
+    });
+    document.querySelectorAll(".hide-right").forEach(function(e) {
+        if (hideBtnIconClassList.contains("fa-angle-double-down")) {
+            e.style.left = e.offsetWidth + "px";
+        } else {
+            e.style.left = 0 + "px";
+        }
     });
 });
