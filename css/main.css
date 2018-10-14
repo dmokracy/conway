@@ -1,12 +1,21 @@
 .overlay {
+    /* Behave as a frame for overlay contents */
     position: fixed;
-    height: 100%;
-    width: 100%;
     top: 0;
     left: 0;
+    height: 100%;
+    width: 100%;
+
+    /* Use CSS Grid for alignment/placement of contents */
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto 50px 1fr 20px auto;
+    grid-template-areas:
+        " title     .     hideBtn"
+        "   .       .        .   "
+        "   .       .      tool  "
+        "   .       .      tool  "
+        "control    .        .   ";
 }
 
 .overlay div {
@@ -14,32 +23,25 @@
     background-color: white;
     border: 2px black dashed;
     padding: 4px;
-    overflow: hidden;
     transition: all 250ms linear;
 }
 
 .title-bar {
-    grid-column: 1;
-    grid-row: 1;
+    grid-area: title;
 }
 
 .control-bar {
-    grid-column: 1;
-    grid-row: 5;
-    align-self: end;
+    grid-area: control;
 }
 
 .tool-bar {
-    grid-column: 3;
-    grid-row: 3;
-    justify-self: end;
+    grid-area: tool;
 
     max-width: 50px;
 }
 
 .hide-button {
-    grid-column: 3;
-    grid-row: 1;
+    grid-area: hideBtn;
     justify-self: end;
     
     height: 16px;
@@ -47,6 +49,7 @@
     text-align: center;
 }
 
+/* Utility styles for transitions to work properly... */
 .hide-up {
     bottom: 0px;
 }

@@ -18,6 +18,7 @@ for (var i = 0; i < canvas.height / pixelSize; i++) {
     }
 }
 
+
 // Hide button
 var hideBtn = document.querySelector(".hide-button");
 hideBtn.addEventListener("click", function() {
