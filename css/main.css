@@ -1,20 +1,55 @@
 .overlay {
     position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 50px 1fr 20px auto;
+}
+
+.overlay div {
     background-color: white;
     border: 2px black dashed;
     padding: 4px;
-    top: 0;
-    left: 0;
     overflow: hidden;
-    transition: all 400ms linear;
+    transition: all 250ms linear;
 }
 
-.hidden-bar {
+.title-bar {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.control-bar {
+    grid-column: 1;
+    grid-row: 5;
+    align-self: end;
+}
+
+.tool-bar {
+    grid-column: 3;
+    grid-row: 3;
+    justify-self: end;
+}
+
+.hide-button {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    
+    height: 16px;
+    width: 16px;
+    text-align: center;
+}
+
+div.hidden-bar {
     border: 0;
 }
 
 .bar-X {
-    max-width: 150px;
+    max-width: 50px;
 }
 
 .bar-Y {
@@ -31,23 +66,4 @@
     max-height: 0;
     padding-top: 0;
     padding-bottom: 0;
-}
-
-.control-bar {
-    top: initial;
-    bottom: 0;
-}
-
-.tool-bar {
-    top: 200px;
-    left: initial;
-    right: 0;
-}
-
-.hide-button {
-    height: initial;
-    width: 16px;
-    left: initial;
-    right: 10px;
-    text-align: center;
 }
