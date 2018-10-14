@@ -2,8 +2,35 @@
     position: fixed;
     background-color: white;
     border: 2px black dashed;
+    padding: 4px;
     top: 0;
     left: 0;
+    overflow: hidden;
+    transition: all 400ms linear;
+}
+
+.hidden-bar {
+    border: 0;
+}
+
+.bar-X {
+    max-width: 150px;
+}
+
+.bar-Y {
+    max-height: 25px;
+}
+
+.bar-X.hidden-bar {
+    max-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.bar-Y.hidden-bar {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .control-bar {
@@ -15,4 +42,12 @@
     top: 200px;
     left: initial;
     right: 0;
+}
+
+.hide-button {
+    height: initial;
+    width: 16px;
+    left: initial;
+    right: 10px;
+    text-align: center;
 }

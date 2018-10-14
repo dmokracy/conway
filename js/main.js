@@ -17,3 +17,14 @@ for (var i = 0; i < canvas.height / pixelSize; i++) {
                      pixelSize - borderSize, pixelSize - borderSize);
     }
 }
+
+// Hide button
+var hideBtn = document.querySelector(".hide-button");
+hideBtn.addEventListener("click", function() {
+    var hideBtnIconClassList = hideBtn.querySelector("i").classList;
+    hideBtnIconClassList.toggle("fa-angle-double-up");
+    hideBtnIconClassList.toggle("fa-angle-double-down");
+    document.querySelectorAll(".bar").forEach(function(e) {
+        e.classList.toggle("hidden-bar");
+    });
+});

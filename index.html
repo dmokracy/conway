@@ -4,13 +4,20 @@
         <title>Conway's Game of Life</title>
         <!-- Normalize.css to reset styles -->
         <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <canvas class="canvas">If you can read this, your browser is too old!</canvas>
-        <div class="overlay title-bar">This would be the header</div>
-        <div class="overlay control-bar">This would be the controls</div>
-        <div class="overlay tool-bar">Toolbar goes here</div>
+        <div class="overlay hide-button"><i class="fas fa-angle-double-up"></i></div>
+        <div class="overlay bar bar-Y title-bar">This would be the header TITLEEEEE and info?</div>
+        <div class="overlay bar bar-Y control-bar">This would be the view controls (Play) (Pause) (Speed) (Zoom)</div>
+        <div class="overlay bar bar-X tool-bar">
+            Toolbar and stuff<br>to edit data goes here<br>
+            add cell icon<br>
+            edit by text icon
+        </div>
         <script src="js/main.js"></script>
     </body>
 </html>
