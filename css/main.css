@@ -1,0 +1,50 @@
+.overlay {
+    /* Behave as a frame for overlay contents */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    /* Use CSS Grid for alignment/placement of contents */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 50px 1fr 20px auto;
+    grid-template-areas:
+        " title     .     hideBtn"
+        "   .       .        .   "
+        "   .       .      tool  "
+        "   .       .      tool  "
+        "control    .        .   ";
+}
+
+.overlay div {
+    position: relative;
+    background-color: white;
+    border: 2px black dashed;
+    padding: 4px;
+    transition: all 250ms linear;
+}
+
+.title-bar {
+    grid-area: title;
+}
+
+.control-bar {
+    grid-area: control;
+}
+
+.tool-bar {
+    grid-area: tool;
+
+    max-width: 50px;
+}
+
+.hide-button {
+    grid-area: hideBtn;
+    justify-self: end;
+    
+    height: 16px;
+    width: 16px;
+    text-align: center;
+}

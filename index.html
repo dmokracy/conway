@@ -1,54 +1,25 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Conway's Game of Life</title>
-                <link rel="stylesheet" type="text/css" href="./css/style.css">
-	</head>
-	<body>
-		<h1 id="mainTitle">Conway's Game of Life v1.0</h1>
-		<p id="lineOfText">This is a start.</p>
-                <table id="conway" class="maingrid">
-                        <tr>
-                                <td></td>
-                                <td></td>
-                        </tr>
-                        <tr>
-                                <td></td>
-                                <td></td>
-                        </tr>
-                </table>
-                <script>
-                        function activateNostalgia() {
-                                // Change title font and colour
-                                document.getElementById("mainTitle").style.fontFamily = "Comic Sans MS, cursive, sans-serif";
-                                document.getElementById("mainTitle").style.color = "navy";
-                                // Change general text
-                                var newText = "Aw yeah, bringing back that Comic Sans chic.";
-                                document.getElementById("lineOfText").innerHTML = newText;
-                                document.getElementById("lineOfText").style.color = "navy";
-                                document.getElementById("lineOfText").style.fontFamily = "Comic Sans MS, cursive, sans-serif";
-                                // Change background colour to that pale yellow that was weirdly popular
-                                document.body.style.backgroundColor = "#FFFF66";
-                                // Change the button function?
-                                document.getElementById("moodButton").innerHTML = "Back to Normal"
-                                document.getElementById("moodButton").onclick = activateNormal;
-                        }
-                        function activateNormal() {
-                                // Change title font and colour
-                                document.getElementById("mainTitle").style.fontFamily = "Arial, Helvetica, sans-serif";
-                                document.getElementById("mainTitle").style.color = "black";
-                                // Change general text
-                                var newText = "Back to boring.";
-                                document.getElementById("lineOfText").innerHTML = newText;
-                                document.getElementById("lineOfText").style.color = "black";
-                                document.getElementById("lineOfText").style.fontFamily =  "Arial, Helvetica, sans-serif";
-                                // Change background colour back to white
-                                document.body.style.backgroundColor = "white";
-                                // Change the button function?
-                                document.getElementById("moodButton").innerHTML = "Activate Nostalgia Mode"
-                                document.getElementById("moodButton").onclick = activateNostalgia;
-                        }
-                </script>
-                <p><button id="moodButton" onclick="activateNostalgia()">Activate Nostalgia Mode</button></p>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <title>Conway's Game of Life</title>
+        <!-- Normalize.css to reset styles -->
+        <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <canvas class="canvas">If you can read this, your browser is too old!</canvas>
+        <div class="overlay">
+            <div class="hideable-up title-bar">Title - Info</div>
+            <div class="hideable-down control-bar">View controls (Play) (Pause) (Speed) (Zoom)</div>
+            <div class="hideable-right tool-bar">
+                Toolbar and stuff to edit data goes here, add cell, edit by text icon<br>
+                should all just be icons
+            </div>
+            <div class="hide-button"><i class="fas fa-angle-double-up"></i></div>
+        </div>
+        <script src="js/main.js"></script>
+    </body>
 </html>
