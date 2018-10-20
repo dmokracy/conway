@@ -48,16 +48,3 @@
     width: 16px;
     text-align: center;
 }
-
-/* Utility styles for transitions to work properly... */
-.hide-up {
-    bottom: 0px;
-}
-
-.hide-down {
-    top: 0px;
-}
-
-.hide-right {
-    left: 0px;
-}
