@@ -8,15 +8,19 @@ ctx.canvas.height = window.innerHeight;
 ctx.canvas.width = window.innerWidth;
 
 // Grid parameters
+//   We will make the border on the right and bottom edges of the pixel
+//     (that is, we fill in the grid cell and but leave a gap).
+//   The fillStyle of the background canvas will be the border colour.
 var pixelSize = 25;
-var borderSize = 2;      // Border is drawn on the right and bottom edges of the pixel
-ctx.fillStyle = "gray";  // This will be the border colour
+var borderSize = 2;      
+ctx.fillStyle = "gray";  
 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 // Make a grid
 for (var i = 0; i < canvas.height / pixelSize; i++) {
     for (var j = 0; j < canvas.width / pixelSize; j++) {
-        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";  // Arbitrary colouring for demo
+        // Arbitrary colouring for demo
+        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";
         ctx.fillRect(pixelSize * j,          pixelSize * i,
                      pixelSize - borderSize, pixelSize - borderSize);
     }
@@ -59,7 +63,7 @@ Object.keys(hideLogicObj).forEach(function(dir) {
 var hideBtn = document.querySelector(".hide-button");
 hideBtn.addEventListener("click", function() {
     let isHiding = hideBtn.classList.toggle("active");
-    
+
     let hideBtnIcon = hideBtn.querySelector("i");
     hideBtnIcon.classList.toggle("fa-angle-double-up", !isHiding);
     hideBtnIcon.classList.toggle("fa-angle-double-down", isHiding);
