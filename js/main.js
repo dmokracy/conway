@@ -4,7 +4,7 @@
 
 var canvas = document.querySelector(".canvas");
 var ctx = canvas.getContext("2d");
-ctx.canvas.height = window.innerHeight - 4;  // slight offset or else it overflows and causes scroll in Firefox
+ctx.canvas.height = window.innerHeight;
 ctx.canvas.width = window.innerWidth;
 
 // Grid parameters
