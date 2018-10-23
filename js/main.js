@@ -30,7 +30,7 @@ for (var i = 0; i < canvas.height / pixelSize; i++) {
  */
 
 // Logic for hiding animation
-var hideIterator = {
+var hideLogicObj = {
     up: {
         style: "bottom",
         size: "offsetHeight"
@@ -50,27 +50,25 @@ var hideIterator = {
 }
 
 // Initialize CSS attributes for hideables so CSS animations work properly
-Object.keys(hideIterator).forEach(function(dir) {
+Object.keys(hideLogicObj).forEach(function(dir) {
     document.querySelectorAll(".hideable-" + dir).forEach(function(e) {
-        e.style[hideIterator[dir].style] = "0px";
+        e.style[hideLogicObj[dir].style] = "0px";
     });
 });
 
 var hideBtn = document.querySelector(".hide-button");
 hideBtn.addEventListener("click", function() {
-    let hideBtnIconClassList = hideBtn.querySelector("i").classList;
-    hideBtnIconClassList.toggle("fa-angle-double-up");
-    hideBtnIconClassList.toggle("fa-angle-double-down");
-    let isHidden = hideBtnIconClassList.contains("fa-angle-double-down");
+    let isHiding = hideBtn.classList.toggle("active");
+    
+    let hideBtnIcon = hideBtn.querySelector("i");
+    hideBtnIcon.classList.toggle("fa-angle-double-up", !isHiding);
+    hideBtnIcon.classList.toggle("fa-angle-double-down", isHiding);
 
     // Hide each hideable
-    Object.keys(hideIterator).forEach(function(dir) {
+    Object.keys(hideLogicObj).forEach(function(dir) {
         document.querySelectorAll(".hideable-" + dir).forEach(function(e) {
-            if (isHidden) {
-                e.style[hideIterator[dir].style] = e[hideIterator[dir].size] + "px";
-            } else {
-                e.style[hideIterator[dir].style] = "0px";
-            }
+            e.style[hideLogicObj[dir].style] =
+                isHiding ? e[hideLogicObj[dir].size] + "px" : "0px";
         });
     });
 });
