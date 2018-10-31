@@ -16,20 +16,24 @@ var borderSize = 2;
 ctx.fillStyle = "gray";  
 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-// Data structure
+// Data structure containing status of all cells in the grid
 var dataMatrix = [];
 
 // Make a grid and initialize data structure
 for (var i = 0; i < canvas.height / pixelSize; i++) {
     dataMatrix.push([]);
     for (var j = 0; j < canvas.width / pixelSize; j++) {
-        // Arbitrary colouring for demo
-        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";
+        ctx.fillStyle = "black";
         ctx.fillRect(pixelSize * j,          pixelSize * i,
                      pixelSize - borderSize, pixelSize - borderSize);
-        dataMatrix[i][j] = ((i + j) % 70) ? 0 : 1;
+        dataMatrix[i][j] = 0;
     }
 }
+
+// Initialize data matrix with a blinker for testing purposes
+dataMatrix[20][20] = 1;
+dataMatrix[20][21] = 1;
+dataMatrix[20][22] = 1;
 
 /*
  *  Data update functions
@@ -42,7 +46,6 @@ function deepCopyMatrix(mat)
     }
     return copy;
 }
-
 
 // Counts the number of living neighbours for a given cell
 function sumNeighbours(mat, i, j)
@@ -74,7 +77,17 @@ function sumNeighbours(mat, i, j)
     });
 }
 
-
+// Updates the drawn grid with contents of the data matrix
+function updateGridDrawing(mat)
+{
+    for (var i = 0; i < canvas.height / pixelSize; i++) {
+        for (var j = 0; j < canvas.width / pixelSize; j++) {
+            ctx.fillStyle = Boolean(mat[i][j]) ? "white" : "black";
+            ctx.fillRect(pixelSize * j,          pixelSize * i,
+                         pixelSize - borderSize, pixelSize - borderSize);
+        }
+    }
+}
 
 /*
  *  Toolbar animations
@@ -123,3 +136,18 @@ hideBtn.addEventListener("click", function() {
         });
     });
 });
+
+// Grid animation test
+// Send 10 messages to the worker's event queue
+if (window.Worker) {
+    var updateWorker = new Worker("js\\updateWorker.js");
+    for (var i = 0; i < 10; i++) {
+        updateWorker.postMessage(dataMatrix);
+    }
+    updateWorker.onmessage = function(e) {
+        updateGridDrawing(e.data);
+        console.log('Message received from worker!');
+    }
+}
+
+
