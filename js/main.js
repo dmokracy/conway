@@ -4,13 +4,16 @@
 
 var canvas = document.querySelector(".canvas");
 var ctx = canvas.getContext("2d");
-ctx.canvas.height = window.innerHeight - 4;  // slight offset or else it overflows and causes scroll in Firefox
+ctx.canvas.height = window.innerHeight;
 ctx.canvas.width = window.innerWidth;
 
 // Grid parameters
+//   We will make the border on the right and bottom edges of the pixel
+//     (that is, we fill in the grid cell and but leave a gap).
+//   The fillStyle of the background canvas will be the border colour.
 var pixelSize = 25;
-var borderSize = 2;      // Border is drawn on the right and bottom edges of the pixel
-ctx.fillStyle = "gray";  // This will be the border colour
+var borderSize = 2;      
+ctx.fillStyle = "gray";  
 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 // Data structure
@@ -20,7 +23,8 @@ var dataMatrix = [];
 for (var i = 0; i < canvas.height / pixelSize; i++) {
     dataMatrix.push([]);
     for (var j = 0; j < canvas.width / pixelSize; j++) {
-        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";  // Arbitrary colouring for demo
+        // Arbitrary colouring for demo
+        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";
         ctx.fillRect(pixelSize * j,          pixelSize * i,
                      pixelSize - borderSize, pixelSize - borderSize);
         dataMatrix[i][j] = ((i + j) % 70) ? 0 : 1;
@@ -77,7 +81,7 @@ function sumNeighbours(mat, i, j)
  */
 
 // Logic for hiding animation
-var hideIterator = {
+var hideLogicObj = {
     up: {
         style: "bottom",
         size: "offsetHeight"
@@ -97,27 +101,25 @@ var hideIterator = {
 }
 
 // Initialize CSS attributes for hideables so CSS animations work properly
-Object.keys(hideIterator).forEach(function(dir) {
+Object.keys(hideLogicObj).forEach(function(dir) {
     document.querySelectorAll(".hideable-" + dir).forEach(function(e) {
-        e.style[hideIterator[dir].style] = "0px";
+        e.style[hideLogicObj[dir].style] = "0px";
     });
 });
 
 var hideBtn = document.querySelector(".hide-button");
 hideBtn.addEventListener("click", function() {
-    let hideBtnIconClassList = hideBtn.querySelector("i").classList;
-    hideBtnIconClassList.toggle("fa-angle-double-up");
-    hideBtnIconClassList.toggle("fa-angle-double-down");
-    let isHidden = hideBtnIconClassList.contains("fa-angle-double-down");
+    let isHiding = hideBtn.classList.toggle("active");
+
+    let hideBtnIcon = hideBtn.querySelector("i");
+    hideBtnIcon.classList.toggle("fa-angle-double-up", !isHiding);
+    hideBtnIcon.classList.toggle("fa-angle-double-down", isHiding);
 
     // Hide each hideable
-    Object.keys(hideIterator).forEach(function(dir) {
+    Object.keys(hideLogicObj).forEach(function(dir) {
         document.querySelectorAll(".hideable-" + dir).forEach(function(e) {
-            if (isHidden) {
-                e.style[hideIterator[dir].style] = e[hideIterator[dir].size] + "px";
-            } else {
-                e.style[hideIterator[dir].style] = "0px";
-            }
+            e.style[hideLogicObj[dir].style] =
+                isHiding ? e[hideLogicObj[dir].size] + "px" : "0px";
         });
     });
 });
