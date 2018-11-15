@@ -16,6 +16,9 @@ var borderSize = 2;
 ctx.fillStyle = "gray";  
 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
+// Delay between updating the grid, in milliseconds
+var drawDelay = 500;
+
 // Data structure containing status of all cells in the grid
 var dataMatrix = [];
 
@@ -31,9 +34,9 @@ for (var i = 0; i < canvas.height / pixelSize; i++) {
 }
 
 // Initialize data matrix with a blinker for testing purposes
-dataMatrix[20][20] = 1;
-dataMatrix[20][21] = 1;
-dataMatrix[20][22] = 1;
+dataMatrix[15][5] = 1;
+dataMatrix[15][6] = 1;
+dataMatrix[15][7] = 1;
 
 /*
  *  Data update functions
@@ -75,6 +78,23 @@ function sumNeighbours(mat, i, j)
     return neighbours.reduce(function(total, num) {
         return total + num;
     });
+}
+
+// Returns the next generation for the given data matrix
+function updateMatrix(mat)
+{
+    let newMat = deepCopyMatrix(mat);
+    for (var i = 0; i < mat.length; i++) {
+        for (var j = 0; j < mat[0].length; j++) {
+            let population = sumNeighbours(mat, i, j)
+            if (population < 2 || population > 3) {
+                newMat[i][j] = 0;
+            } else if (population == 3) {
+                newMat[i][j] = 1;
+            }
+        }
+    }
+    return newMat;
 }
 
 // Updates the drawn grid with contents of the data matrix
@@ -138,16 +158,11 @@ hideBtn.addEventListener("click", function() {
 });
 
 // Grid animation test
-// Send 10 messages to the worker's event queue
-if (window.Worker) {
-    var updateWorker = new Worker("js\\updateWorker.js");
-    for (var i = 0; i < 10; i++) {
-        updateWorker.postMessage(dataMatrix);
-    }
-    updateWorker.onmessage = function(e) {
-        updateGridDrawing(e.data);
-        console.log('Message received from worker!');
-    }
-}
-
+setInterval(
+    function() {
+        updateGridDrawing(dataMatrix);
+        dataMatrix = updateMatrix(dataMatrix);
+    },
+    drawDelay
+);
 
