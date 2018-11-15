@@ -16,18 +16,98 @@ var borderSize = 2;
 ctx.fillStyle = "gray";  
 ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-// Make a grid
+// Delay between updating the grid, in milliseconds
+var drawDelay = 500;
+
+// Data structure containing status of all cells in the grid
+var dataMatrix = [];
+
+// Make a grid and initialize data structure
 for (var i = 0; i < canvas.height / pixelSize; i++) {
+    dataMatrix.push([]);
     for (var j = 0; j < canvas.width / pixelSize; j++) {
-        // Arbitrary colouring for demo
-        ctx.fillStyle = ((i + j) % 70) ? "black" : "white";
+        ctx.fillStyle = "black";
         ctx.fillRect(pixelSize * j,          pixelSize * i,
                      pixelSize - borderSize, pixelSize - borderSize);
+        dataMatrix[i][j] = 0;
     }
 }
 
+// Initialize data matrix with a blinker for testing purposes
+dataMatrix[15][5] = 1;
+dataMatrix[15][6] = 1;
+dataMatrix[15][7] = 1;
 
+/*
+ *  Data update functions
+ */
+function deepCopyMatrix(mat)
+{
+    let copy = [];
+    for (var i = 0; i < mat.length; i++) {
+        copy.push(mat[i].slice());
+    }
+    return copy;
+}
 
+// Counts the number of living neighbours for a given cell
+function sumNeighbours(mat, i, j)
+{
+    let n = (i == 0) ? 0 : 1;
+    let s = (i == (mat.length - 1)) ? 0 : 1;
+    let w = (j == 0) ? 0 : 1;
+    let e = (j == (mat[0].length - 1)) ? 0 : 1;
+    
+    let neighbours = [ mat[i-n][j-w], mat[i-n][j], mat[i-n][j+e],
+                       mat[i][j-w],                 mat[i][j+e],
+                       mat[i+s][j-w], mat[i+s][j], mat[i+s][j+e] ];
+
+    // Cells beyond the edge of the matrix are considered dead
+    if (!n) {
+        neighbours[0] = neighbours[1] = neighbours[2] = 0;
+    }
+    if (!s) {
+        neighbours[5] = neighbours[6] = neighbours[7] = 0;
+    }
+    if (!w) {
+        neighbours[0] = neighbours[3] = neighbours[5] = 0;
+    }
+    if (!e) {
+        neighbours[2] = neighbours[4] = neighbours[7] = 0;
+    }
+    return neighbours.reduce(function(total, num) {
+        return total + num;
+    });
+}
+
+// Returns the next generation for the given data matrix
+function updateMatrix(mat)
+{
+    let newMat = deepCopyMatrix(mat);
+    for (var i = 0; i < mat.length; i++) {
+        for (var j = 0; j < mat[0].length; j++) {
+            let population = sumNeighbours(mat, i, j)
+            if (population < 2 || population > 3) {
+                newMat[i][j] = 0;
+            } else if (population == 3) {
+                newMat[i][j] = 1;
+            }
+        }
+    }
+    return newMat;
+}
+
+// Updates the drawn grid with contents of the data matrix
+function updateGridDrawing(mat)
+{
+    for (var i = 0; i < canvas.height / pixelSize; i++) {
+        for (var j = 0; j < canvas.width / pixelSize; j++) {
+            ctx.fillStyle = Boolean(mat[i][j]) ? "white" : "black";
+            ctx.fillRect(pixelSize * j,          pixelSize * i,
+                         pixelSize - borderSize, pixelSize - borderSize);
+        }
+    }
+}
 
 /*
  *  Toolbar animations
@@ -76,3 +156,13 @@ hideBtn.addEventListener("click", function() {
         });
     });
 });
+
+// Grid animation test
+setInterval(
+    function() {
+        updateGridDrawing(dataMatrix);
+        dataMatrix = updateMatrix(dataMatrix);
+    },
+    drawDelay
+);
+
